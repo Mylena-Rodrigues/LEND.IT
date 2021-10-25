@@ -1,5 +1,5 @@
 const { Usuarios , sequelize } = require ('../models/');
-
+//Controllers de Usuario
 const usuariosControllers = {
     index: async (req, res) => {
         const listUsuarios = await Usuarios.findAll();
