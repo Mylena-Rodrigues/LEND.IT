@@ -1,4 +1,4 @@
-const { Usuarios , sequelize } = require ('../models/Usuarios');
+const { Usuarios , sequelize } = require ('../models/');
 
 const usuariosControllers = {
     index: async (req, res) => {
