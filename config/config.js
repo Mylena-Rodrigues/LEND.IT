@@ -1,6 +1,6 @@
 //Informações do usuário
 require('dotenv').config();
-//conexão BD
+// //Conexão DB
 module.exports = {
     "username": process.env.DB_USER,
     "password": process.env.DB_PASS,

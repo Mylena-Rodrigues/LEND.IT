@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             data_devolucao: DataTypes.DATE,
             resultado_devolucao: DataTypes.BOOLEAN
         }, {
-            tableName: "emprestado",
+            tableName: "emprestados",
             timestamps: true
         }
     );
