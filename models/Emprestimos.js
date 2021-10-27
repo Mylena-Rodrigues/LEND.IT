@@ -1,4 +1,7 @@
-module.exports = (sequelize, DataTypes) => {
+const config = require('../config/config');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize(config);
+module.exports = () => {
     const Emprestimos = sequelize.define(
         'Emprestimos', {
             item_emprestado: DataTypes.STRING,
