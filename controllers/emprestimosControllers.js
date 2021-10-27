@@ -1,4 +1,5 @@
 const Emprestimos = require('../models/Emprestimos');
+const moment = require ('moment')
 
 const emprestimosControllers = {
     //Listar Emprestimos
@@ -15,15 +16,9 @@ const emprestimosControllers = {
 
     //Criar emprestimo
     create: async (req, res) => {
-        const { item, contato, data_emp, data_devo, result_devo } = req.body;
-        const novoEmp = await Usuarios().create(
-            { 
-                item_emprestado: item, 
-                contato_devolucao: contato, 
-                data_emprestimo: data_emp, 
-                data_devolucao: data_devo, 
-                resultado_devolucao: result_devo 
-            })
+        const { item_emprestado, contato_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
+        const novoEmp = await Emprestimos().create(
+            {item_emprestado, contato_devolucao, data_emprestimo, data_devolucao, resultado_devolucao})
             .then((novoEmp) => {
                 console.log(novoEmp);
             })
@@ -36,14 +31,14 @@ const emprestimosControllers = {
     //Atualizar Emprestimo
     update: async (req, res) => {
         const { id } = req.params;
-        const { item, contato, data_emp, data_devo, result_devo } = req.body;
-        const modEmp = await Usuarios().update(
+        const { item_emprestado, contato_devolucao, data_emprestimo, data_devolucao,    resultado_devolucao } = req.body;
+        const modEmp = await Emprestimos().update(
             { 
-                item_emprestado: item, 
-                contato_devolucao: contato, 
-                data_emprestimo: data_emp, 
-                data_devolucao: data_devo, 
-                resultado_devolucao: result_devo  
+                item_emprestado, 
+                contato_devolucao, 
+                data_emprestimo, 
+                data_devolucao, 
+                resultado_devolucao
             }, 
                 { where: { id }}
             )
@@ -59,7 +54,7 @@ const emprestimosControllers = {
     //Deletar Emprestimo
     delete: async (req, res) => {
         const { id } = req.params;
-        const delEmp = await Usuarios().destroy({ where: { id } })
+        const delEmp = await Emprestimos().destroy({ where: { id } })
             .then((delUsuario) => {
                 console.log(delUsuario);
             })
