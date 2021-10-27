@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const emprestimosController = require('../controllers/usuariosController');
+const emprestimosController = require('../controllers/emprestimosControllers');
 
 //Listagem de Emprestimos
 router.get('/', emprestimosController.index);
