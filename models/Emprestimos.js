@@ -11,7 +11,7 @@ module.exports = () => {
             resultado_devolucao: DataTypes.BOOLEAN
         }, {
             tableName: "emprestados",
-            timestamps: true
+            timestamps: false
         }
     );
 
