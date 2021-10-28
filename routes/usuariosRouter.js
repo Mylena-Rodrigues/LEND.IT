@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const usuariosController = require('../controllers/usuariosController');
+const createAuthentication = require('../middlewares/CreateAuthentication');
+const loginAuthentication = require('../middlewares/CreateAuthentication');
 
 //Listagem de usuários
 router.get('/', usuariosController.index);
 //Criação de Usuários
-router.post('/', usuariosController.create);
+router.post('/', createAuthentication, usuariosController.create);
 //Atualização de Usuário
 router.post('/:id', usuariosController.update);
 //Deletando usuário
