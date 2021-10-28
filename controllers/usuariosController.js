@@ -1,4 +1,5 @@
 const Usuarios = require ('../models/Usuarios');
+const { Aunthentic } = require ('../middlewares/')
 const bcrypt = require ('bcrypt');
 //Controllers de Usuario
 const usuariosControllers = {
@@ -13,6 +14,18 @@ const usuariosControllers = {
             console.log("Error to list users: ", err);
         })
         return res.json(listUsuarios);   
+    },
+
+    auth: async (req, res) => {
+            const { login_email, login_senha } = req.body;
+    
+            const user = await Usuarios().findOne({where: { email: login_email }}); 
+            if (user && bcrypt.compareSync(login_senha, user.senha)) {
+                req.session.userLoged = user;
+                return res.redirect('/'); 
+            } else {
+                return res.redirect('/usuarios/Login')
+            }
     },
 
     //Criar usuário
