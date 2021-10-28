@@ -9,7 +9,7 @@ router.get('/', usuariosController.index);
 //Criação de Usuários
 router.post('/', createAuthentication, usuariosController.create);
 //Atualização de Usuário
-router.post('/:id', usuariosController.update);
+router.post('/editar-perfil', loginAuthentication, usuariosController.update);
 //Deletando usuário
 router.delete('/:id', usuariosController.delete);
 

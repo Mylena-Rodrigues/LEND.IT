@@ -1,6 +1,6 @@
 const Usuarios = require ('../models/Usuarios');
-const { Aunthentic } = require ('../middlewares/')
 const bcrypt = require ('bcrypt');
+const querystring = require('querystring');
 //Controllers de Usuario
 const usuariosControllers = {
 
@@ -16,16 +16,29 @@ const usuariosControllers = {
         return res.json(listUsuarios);   
     },
 
+    //Autenticar usuario - Login
     auth: async (req, res) => {
             const { login_email, login_senha } = req.body;
     
-            const user = await Usuarios().findOne({where: { email: login_email }}); 
-            if (user && bcrypt.compareSync(login_senha, user.senha)) {
-                req.session.userLoged = user;
-                return res.redirect('/'); 
+            const usuario = await Usuarios().findOne({where: { email: login_email }}); 
+            
+            if (!usuario) {
+                const data = { 'erro': 'Usuário não cadastrado no banco de dados.' };
+                return res.redirect('/'+ querystring.stringify(data));
+            } else if (bcrypt.compareSync(login_senha, user.senha)) {
+                req.session.usuarioLogado = usuario;
+                const { id } = req.session.usuarioLogado;
+                return res.redirect('/emprestimos/' + id);
             } else {
-                return res.redirect('/usuarios/Login')
+                const data = { 'erro': 'Credenciais incorretas.' };
+                return res.redirect('/' + querystring.stringify(data));
             }
+    },
+
+    //Lougout
+    logout: async (req, res) => {
+        req.session.usuarioLogado = null;
+        return res.redirect("/");
     },
 
     //Criar usuário
@@ -46,7 +59,7 @@ const usuariosControllers = {
 
     //Atualizar usuário
     update: async (req, res) => {
-        const {id} = req.params;
+        const { id } = req.session.usuarioLogado;
         const {email, senha, nome } = req.body;
         const senhaEncript = bcrypt.hashSync(senha, 14);
         const modUsuario = await Usuarios().update({email, senha: senhaEncript, nome}, {where: {id}})
