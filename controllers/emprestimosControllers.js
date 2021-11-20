@@ -1,5 +1,6 @@
 const Emprestimos = require('../models/Emprestimos');
-const moment = require ('moment')
+const Usuarios = require('../models/Usuarios');
+const moment = require ('moment');
 
 const emprestimosControllers = {
     //Listar Emprestimos
@@ -12,6 +13,20 @@ const emprestimosControllers = {
                 console.log("Error to list loans: ", err);
             })
         return res.json(listEmprestimos);
+    },
+
+    //Listar Emprestimos de um usuário especifico
+    userLoanList: async (req, res) => {
+        const {id} = req.params;
+        // const {id} = req.session.UsuarioLogado;
+        const listEmprestimos = await Emprestimos().findAll({where: {id}})
+        .then((listEmprestimos) => {
+            console.log(listEmprestimos);
+        })
+        .catch((err) => {
+            console.log("Error to list user loans: ", err);
+        })
+        return res.render(listEmprestimos);
     },
 
     //Criar emprestimo

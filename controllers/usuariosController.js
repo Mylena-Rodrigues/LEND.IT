@@ -1,4 +1,4 @@
-const Usuarios = require ('../models/Usuarios');
+const {Usuarios, sequelize} = require ('../models/Usuarios');
 const bcrypt = require ('bcrypt');
 const querystring = require('querystring');
 //Controllers de Usuario
@@ -28,7 +28,7 @@ const usuariosControllers = {
             } else if (bcrypt.compareSync(login_senha, user.senha)) {
                 req.session.usuarioLogado = usuario;
                 const { id } = req.session.usuarioLogado;
-                return res.redirect('/emprestimos/' + id);
+                return res.redirect('/emprestimos/user=?' + id);
             } else {
                 const data = { 'erro': 'Credenciais incorretas.' };
                 return res.redirect('/' + querystring.stringify(data));
