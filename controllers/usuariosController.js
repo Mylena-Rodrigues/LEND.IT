@@ -1,4 +1,4 @@
-const {Usuarios, sequelize} = require ('../models/Usuarios');
+const Usuarios = require ('../models/Usuarios');
 const bcrypt = require ('bcrypt');
 const querystring = require('querystring');
 //Controllers de Usuario
@@ -18,14 +18,13 @@ const usuariosControllers = {
 
     //Autenticar usuario - Login
     auth: async (req, res) => {
-            const { login_email, login_senha } = req.body;
+            const { email, password } = req.body;
     
-            const usuario = await Usuarios().findOne({where: { email: login_email }}); 
+            const usuario = await Usuarios().findOne({where: { email: email }}); 
             
             if (!usuario) {
-                const data = { 'erro': 'Usuário não cadastrado no banco de dados.' };
-                return res.redirect('/'+ querystring.stringify(data));
-            } else if (bcrypt.compareSync(login_senha, user.senha)) {
+                return res.status(404).json({message: 'user not found.'});
+            } else if (bcrypt.compareSync(password, user.senha)) {
                 req.session.usuarioLogado = usuario;
                 const { id } = req.session.usuarioLogado;
                 return res.redirect('/emprestimos/user=?' + id);

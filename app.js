@@ -5,11 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
 
+const app = express();
+const cors = require('cors');
+app.use(cors());
 const indexRouter = require('./routes/index');
 const usuariosRouter = require('./routes/usuariosRouter');
 const emprestimosRouter = require('./routes/emprestimosRouter');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
