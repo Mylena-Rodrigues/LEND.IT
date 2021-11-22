@@ -3,24 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const session = require('express-session');
 
 const app = express();
 const cors = require('cors');
 app.use(cors());
-const indexRouter = require('./routes/index');
+
 const usuariosRouter = require('./routes/usuariosRouter');
 const emprestimosRouter = require('./routes/emprestimosRouter');
+const cedidosRouter = require('./routes/cedidosRouter');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-app.use(session({
-  secret: "lendIt",
-  saveUninitialized: true,
-  resave: true
-}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,9 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/emprestimos', emprestimosRouter);
+app.use('/cedidos', cedidosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
