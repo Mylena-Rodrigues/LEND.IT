@@ -1,36 +1,36 @@
 const Usuarios  = require('../models/Usuarios')
 
 module.exports = async (request, response, next) => {
-
-    let { email, senha, nome, confirmation  } = request.body;
+    let { email, name, password, password_confirmation  } = request.body;
 
     const emailDefault = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/;
     
-    if(nome && email && senha) {
-        let users = await Usuarios().findAll({ where: { email} });
+    if(email && name && password && password_confirmation) {
+        let users = await Usuarios().findAll({ where: {email} });
         if (!users.length) {
-            if( senha.length >= 6 && senha.length <= 12){
-                if (nome.length >= 2) {
-                        if (senha == confirmation) {
+            if( password.length >= 6 && password.length <= 12){
+                if (name.length >= 2) {
+                        if (password == password_confirmation) {
                             if (emailDefault.test(email)) {
                                 next();  
                             } else {
-                                response.status(400).json({ erro: ' Verifique se o e-mail está correto. '});
+                                return response.status(400).json({ message: ' Verifique se o e-mail está correto. '});
                             }                   
                         } else {
-                            response.status(400).json({ erro: ' Senhas não coincidem. '});
+                            return response.status(400).json({ message: ' Senhas não coincidem >>>' + password + password_confirmation});
                         }
                 } else {
-                    response.status(400).json({ erro: ' O nome deve ter 2 letras ou mais. '});
+                    return response.status(400).json({ message: ' O nome deve ter 2 letras ou mais. '});
                 }
             } else {
-                response.status(400).json({ erro: 'A senha deve ter entre 6 à 12 caracteres.'});
+                return response.status(400).json({ message: 'A senha deve ter entre 6 à 12 caracteres.'});
             }
             
         } else {
-            response.status(400).json({ erro: 'Email já cadastrado.'});
+            console.log('Email já cadastrado.')
+            return response.status(400).json({ message: 'Email já cadastrado.'});
         }
     } else {
-        response.status(400).json({ erro: 'Preencha todos os campos.'});
+        return response.status(400).json({message: 'Preencha todos os campos>>' + email + password + name + password_confirmation});
     }
 }

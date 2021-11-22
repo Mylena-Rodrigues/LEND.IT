@@ -1,6 +1,5 @@
 const Usuarios = require ('../models/Usuarios');
 const bcrypt = require ('bcrypt');
-const querystring = require('querystring');
 //Controllers de Usuario
 const usuariosControllers = {
 
@@ -24,29 +23,26 @@ const usuariosControllers = {
             
             if (!usuario) {
                 return res.status(404).json({message: 'user not found.'});
-            } else if (bcrypt.compareSync(password, user.senha)) {
-                req.session.usuarioLogado = usuario;
-                const { id } = req.session.usuarioLogado;
-                return res.redirect('/emprestimos/user=?' + id);
+            } else if (bcrypt.compareSync(password, usuario.senha)) { 
+                return res.status(200).json(usuario);
             } else {
-                const data = { 'erro': 'Credenciais incorretas.' };
-                return res.redirect('/' + querystring.stringify(data));
+                return res.status(400).json({message: 'Incorrect credencials'});
             }
     },
 
     //Lougout
     logout: async (req, res) => {
-        req.session.usuarioLogado = null;
+        localStorage.setItem('@lendit/user_id', null);
         return res.redirect("/");
     },
 
     //Criar usuário
     create: async (req, res) => {
-        const {email, senha, nome } = req.body;
+        const {email, name, password } = req.body;
         //Encriptação de senha
-        const senhaEncript = bcrypt.hashSync(senha, 14);
+        const senhaEncript = bcrypt.hashSync(password, 14);
         //Criação do novo usuário
-        const novoUsuario = await Usuarios().create({email, senha: senhaEncript, nome})
+        const novoUsuario = await Usuarios().create({email: email, nome: name, senha: senhaEncript })
         .then((novoUsuario) => {
             console.log(novoUsuario);
         })
@@ -57,18 +53,40 @@ const usuariosControllers = {
     },
 
     //Atualizar usuário
-    update: async (req, res) => {
-        const { id } = req.session.usuarioLogado;
-        const {email, senha, nome } = req.body;
-        const senhaEncript = bcrypt.hashSync(senha, 14);
-        const modUsuario = await Usuarios().update({email, senha: senhaEncript, nome}, {where: {id}})
-        .then((modUsuario) => {
-            console.log(modUsuario);
+    updateName: async (req, res) => {
+        const {id, nome } = req.body;
+        const modUsuario = await Usuarios().update({nome}, {where: {id}})
+        .then((modUser) => {
+            return res.status(200).json(modUser); 
         })
         .catch((err) =>{
             console.log("Error to update user: ", err);
         })
-        return res.send(modUsuario); 
+          
+    },
+
+    updateEmail: async (req, res) => {
+        const {id, email} = req.body;
+        const modUsuario = await Usuarios().update({email}, {where: {id: id}})
+        .then((modUsuario) => {
+            res.status(200).json(modUsuario);
+        })
+        .catch((err) =>{
+            console.log("Error to update user: ", err);
+        })   
+    },
+
+
+    updatePassword: async (req, res) => {
+        const {id, senha } = req.body;
+        const senhaEncript = bcrypt.hashSync(senha, 14);
+        const modUsuario = await Usuarios().update({senha: senhaEncript}, {where: {id}})
+        .then(() => {
+            return res.status(200).json(modUsuario); 
+        })
+        .catch((err) =>{
+            console.log("Error to update user: ", err);
+        })
     },
 
     //Deletar usuário

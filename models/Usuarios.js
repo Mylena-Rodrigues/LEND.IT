@@ -16,6 +16,7 @@ module.exports = () => {
         Usuarios.associate = (models) => {
             //Usuario possui muitos empréstimos, identificação através da chave estrangeira apelidada de "emprestimo"
             Usuarios.hasMany(models.Emprestimos, {as: "emprestimo", foreignKey:"id_usuario_donoObj"});
+            Usuarios.hasMany(models.Cedidos, {as: "peguei_emprestado", foreignKey:"id_usuario_n_donoObj"});
         }
 
 
