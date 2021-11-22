@@ -20,7 +20,7 @@ const usuariosControllers = {
             const { email, password } = req.body;
     
             const usuario = await Usuarios().findOne({where: { email: email }}); 
-            
+            console.log(usuario);
             if (!usuario) {
                 return res.status(404).json({message: 'user not found.'});
             } else if (bcrypt.compareSync(password, usuario.senha)) { 

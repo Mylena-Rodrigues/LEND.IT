@@ -16,7 +16,7 @@ const emprestimosControllers = {
 
     //Listar Emprestimos de um usuário especifico
     userLoanList: async (req, res) => {
-        const id = req.params;
+        const id = req.body;
         // const id = JSON.parse(localStorage.getItem('@lendit/user_id'));
         const listEmprestimos = await Emprestimos().findAll({where: {id_usuario_donoObj: id}})
         .then(() => {

@@ -4,7 +4,7 @@ const sequelize = new Sequelize(config);
 module.exports = () => {
     const Cedidos = sequelize.define(
         'Cedidos', {
-            item_peguei_emprestado: DataTypes.STRING,
+            item_emprestado: DataTypes.STRING,
             contato_celular_devolucao: DataTypes.STRING,
             contato_email_devolucao: DataTypes.STRING,
             data_emprestimo: DataTypes.DATE,

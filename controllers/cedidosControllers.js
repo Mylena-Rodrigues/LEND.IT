@@ -15,9 +15,8 @@ const cedidosControllers = {
 
     //Listar Cedidos de um usuário especifico
     userLoanList: async (req, res) => {
-        const id = req.params;
-        // const id = JSON.parse(localStorage.getItem('@lendit/user_id'));
-        const listCedidos = await Cedidos().findAll({where: {id_usuario_n_donoObj: id}})
+        const {id} = req.body;
+        const listCedidos = await Cedidos().findAll({where: {id}})
         .then(() => {
             return res.status(200).json(listCedidos);
         })
@@ -30,9 +29,9 @@ const cedidosControllers = {
     //Criar emprestimo
     create: async (req, res) => {
         const id = localStorage.getItem('@lendit/user_id');
-        const { item_peguei_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
+        const { item_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
         const novoEmp = await Cedidos().create(
-            {id_usuario_donoObj: id, item_peguei_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao})
+            {id_usuario_donoObj: id, item_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao})
             .then(() => {
                 return res.status(200).json(novoEmp);
             })
@@ -44,10 +43,10 @@ const cedidosControllers = {
     //Atualizar Emprestimo
     update: async (req, res) => {
         const { id } = req.params;
-        const { item_peguei_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
+        const { item_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
         const modEmp = await Cedidos().update(
             { 
-                item_peguei_emprestado, 
+                item_emprestado, 
                 contato_celular_devolucao, 
                 contato_email_devolucao, 
                 data_emprestimo, 
