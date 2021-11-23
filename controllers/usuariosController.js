@@ -30,12 +30,6 @@ const usuariosControllers = {
             }
     },
 
-    //Lougout
-    logout: async (req, res) => {
-        localStorage.setItem('@lendit/user_id', null);
-        return res.redirect("/");
-    },
-
     //Criar usuário
     create: async (req, res) => {
         const {email, name, password } = req.body;
@@ -54,8 +48,9 @@ const usuariosControllers = {
 
     //Atualizar usuário
     updateName: async (req, res) => {
-        const {id, nome } = req.body;
-        const modUsuario = await Usuarios().update({nome}, {where: {id}})
+        const { id, nome } = req.body;
+        console.log(id, nome)
+        const modUser = await Usuarios().update({nome}, {where: {id}})
         .then((modUser) => {
             return res.status(200).json(modUser); 
         })

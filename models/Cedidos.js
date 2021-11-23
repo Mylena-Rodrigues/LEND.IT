@@ -5,6 +5,7 @@ module.exports = () => {
     const Cedidos = sequelize.define(
         'Cedidos', {
             item_emprestado: DataTypes.STRING,
+            nome_donoObj: DataTypes.STRING,
             contato_celular_devolucao: DataTypes.STRING,
             contato_email_devolucao: DataTypes.STRING,
             data_emprestimo: DataTypes.DATE,

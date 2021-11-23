@@ -16,10 +16,10 @@ const emprestimosControllers = {
 
     //Listar Emprestimos de um usuário especifico
     userLoanList: async (req, res) => {
-        const id = req.body;
-        // const id = JSON.parse(localStorage.getItem('@lendit/user_id'));
-        const listEmprestimos = await Emprestimos().findAll({where: {id_usuario_donoObj: id}})
-        .then(() => {
+        const {id} = req.body;
+        const listEmprestimos = await Emprestimos().findAll(
+            {where: {id_usuario_donoObj: id}})
+        .then((listEmprestimos) => {
             return res.status(200).json(listEmprestimos);
         })
         .catch((err) => {
@@ -31,10 +31,11 @@ const emprestimosControllers = {
     //Criar emprestimo
     create: async (req, res) => {
         const id = localStorage.getItem('@lendit/user_id');
-        const { item_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
+        const { item_emprestado, nome_responsável_atual, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
         const novoEmp = await Emprestimos().create(
             {
                 id_usuario_donoObj: id, 
+                nome_responsável_atual,
                 item_emprestado, 
                 contato_celular_devolucao, 
                 contato_email_devolucao, 
@@ -53,10 +54,11 @@ const emprestimosControllers = {
     //Atualizar Emprestimo
     update: async (req, res) => {
         const { id } = req.params;
-        const { item_emprestado, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
+        const { item_emprestado, nome_responsável_atual, contato_celular_devolucao, contato_email_devolucao, data_emprestimo, data_devolucao, resultado_devolucao } = req.body;
         const modEmp = await Emprestimos().update(
             { 
-                item_emprestado, 
+                item_emprestado,
+                nome_responsável_atual, 
                 contato_celular_devolucao, 
                 contato_email_devolucao, 
                 data_emprestimo, 
