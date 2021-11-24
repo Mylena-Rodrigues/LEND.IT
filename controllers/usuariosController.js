@@ -14,6 +14,17 @@ const usuariosControllers = {
         })
         return res.json(listUsuarios);   
     },
+    //Listar usuário específico
+    findOne: async (req, res) => {
+        const {id} = req.body;
+        const usuario = await Usuarios().findOne({where: {id: id}})
+        .then((usuario) => {
+            return res.status(200).json(usuario);
+        })
+        .catch((err) =>{
+            console.log("Error to list user: ", err);
+        })  
+    },
 
     //Autenticar usuario - Login
     auth: async (req, res) => {

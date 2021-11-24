@@ -5,7 +5,8 @@ const createAuthentication = require('../middlewares/CreateAuthentication');
 
 //Listagem de usuários
 router.get('/', usuariosController.index);
-
+//Listar usuário específico
+router.post('/info/', usuariosController.findOne);
 //Autenticação de usuário
 router.post('/auth', usuariosController.auth);
 //Criação de Usuários
