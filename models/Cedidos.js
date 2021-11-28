@@ -6,6 +6,13 @@ module.exports = () => {
     "Cedidos",
     {
       item_emprestado: DataTypes.STRING,
+      id_usuario_n_donoObj: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Usuarios', key: 'id' },
+        onUpdate: 'RESTRICT',
+        onDelete: 'RESTRICT',
+        allowNull: false,
+      },
       nome_donoObj: DataTypes.STRING,
       contato_celular_devolucao: DataTypes.STRING,
       contato_email_devolucao: DataTypes.STRING,
@@ -22,7 +29,7 @@ module.exports = () => {
   //Associação de foreign Key
   Cedidos.associate = (models) => {
     Cedidos.belongsTo(models.Usuarios, {
-      as: "emprestimo",
+      as: "peguei_emprestado",
       foreignKey: "id_usuario_n_donoObj",
     });
   };

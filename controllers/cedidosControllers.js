@@ -29,8 +29,8 @@ const cedidosControllers = {
 
   //Criar emprestimo
   create: async (req, res) => {
-    const id = localStorage.getItem("@lendit/user_id");
     const {
+      id_usuario_n_donoObj,
       item_emprestado,
       nome_donoObj,
       contato_celular_devolucao,
@@ -39,22 +39,24 @@ const cedidosControllers = {
       data_devolucao,
       resultado_devolucao,
     } = req.body;
+
     const novoEmp = await Cedidos()
       .create({
-        id_usuario_donoObj: id,
+        id_usuario_n_donoObj,
         item_emprestado,
         nome_donoObj,
         contato_celular_devolucao,
         contato_email_devolucao,
         data_emprestimo,
         data_devolucao,
-        resultado_devolucao,
+        resultado_devolucao
       })
-      .then(() => {
+      .then((novoEmp) => {
         return res.status(200).json(novoEmp);
       })
       .catch((err) => {
-        console.log("Error to create loan: ", err);
+        console.log("Error to create loan: ", err)
+        // return res.status(400).json("Error to create loan: ", err);
       });
   },
 

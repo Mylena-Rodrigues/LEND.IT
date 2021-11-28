@@ -6,6 +6,13 @@ module.exports = () => {
     "Emprestimos",
     {
       item_emprestado: DataTypes.STRING,
+      id_usuario_donoObj: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Usuarios', key: 'id' },
+        onUpdate: 'RESTRICT',
+        onDelete: 'RESTRICT',
+        allowNull: false,
+      },
       nome_responsável_atual: DataTypes.STRING,
       contato_celular_devolucao: DataTypes.STRING,
       contato_celular_devolucao: DataTypes.STRING,
