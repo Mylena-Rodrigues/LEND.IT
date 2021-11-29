@@ -16,11 +16,17 @@ const emprestimosControllers = {
 
   //Listar Emprestimos de um usuário especifico
   userLoanList: async (req, res) => {
+
+    
     const { id } = req.body;
     const listEmprestimos = await Emprestimos()
-      .findAll({ where: { id_usuario_donoObj: id } })
+      .findAll({ where: { id_usuario_donoObj: id }})
       .then((listEmprestimos) => {
-        return res.status(200).json(listEmprestimos);
+
+        const newListEmprestimos = listEmprestimos.filter((emp) => {
+          return emp.resultado_devolucao < 1;
+        })
+        return res.status(200).json(newListEmprestimos);
       })
       .catch((err) => {
         console.log("Error to list user loans: ", err);
@@ -37,14 +43,14 @@ const emprestimosControllers = {
       contato_email_devolucao,
       data_emprestimo,
       data_devolucao,
-      resultado_devolucao,
+      resultado_devolucao
     } = req.body;
-
+    
     const novoEmp = await Emprestimos()
       .create({
         id_usuario_donoObj,
-        nome_responsável_atual,
         item_emprestado,
+        nome_responsável_atual,
         contato_celular_devolucao,
         contato_email_devolucao,
         data_emprestimo,
@@ -55,7 +61,7 @@ const emprestimosControllers = {
         return res.status(200).json(novoEmp);
       })
       .catch((err) => {
-        return res.status(404).json("Error to create loan: ", err);
+       console.log("Error to create loan: ", err);
       });
   },
 

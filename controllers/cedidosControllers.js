@@ -20,7 +20,10 @@ const cedidosControllers = {
     const listCedidos = await Cedidos()
       .findAll({ where: { id_usuario_n_donoObj: id } })
       .then((listCedidos) => {
-        return res.status(200).json(listCedidos);
+        const newListCedidos = listCedidos.filter((emp) => {
+          return emp.resultado_devolucao < 1;
+        })
+        return res.status(200).json(newListCedidos);
       })
       .catch((err) => {
         console.log("Error to list user loans: ", err);
@@ -56,7 +59,6 @@ const cedidosControllers = {
       })
       .catch((err) => {
         console.log("Error to create loan: ", err)
-        // return res.status(400).json("Error to create loan: ", err);
       });
   },
 
