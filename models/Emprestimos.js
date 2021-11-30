@@ -13,7 +13,7 @@ module.exports = () => {
         onDelete: 'RESTRICT',
         allowNull: false,
       },
-      nome_responsável_atual: DataTypes.STRING,
+      nome_responsavel_atual: DataTypes.STRING,
       contato_celular_devolucao: DataTypes.STRING,
       contato_celular_devolucao: DataTypes.STRING,
       data_emprestimo: DataTypes.DATE,

@@ -38,7 +38,7 @@ const emprestimosControllers = {
     const {
       id_usuario_donoObj,
       item_emprestado,
-      nome_responsável_atual,
+      nome_responsavel_atual,
       contato_celular_devolucao,
       contato_email_devolucao,
       data_emprestimo,
@@ -50,7 +50,7 @@ const emprestimosControllers = {
       .create({
         id_usuario_donoObj,
         item_emprestado,
-        nome_responsável_atual,
+        nome_responsavel_atual,
         contato_celular_devolucao,
         contato_email_devolucao,
         data_emprestimo,
@@ -70,7 +70,7 @@ const emprestimosControllers = {
     const { id } = req.params;
     const {
       item_emprestado,
-      nome_responsável_atual,
+      nome_responsavel_atual,
       contato_celular_devolucao,
       contato_email_devolucao,
       data_emprestimo,
@@ -81,7 +81,7 @@ const emprestimosControllers = {
       .update(
         {
           item_emprestado,
-          nome_responsável_atual,
+          nome_responsavel_atual,
           contato_celular_devolucao,
           contato_email_devolucao,
           data_emprestimo,
@@ -100,10 +100,11 @@ const emprestimosControllers = {
 
   //Deletar Emprestimo
   delete: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
+    console.log(">>>>>>>>>>>>>>" + id);
     const delEmp = await Emprestimos()
-      .destroy({ where: { id } })
-      .then(() => {
+      .destroy({ where: {id} })
+      .then((delEmp) => {
         return res.status(200).json(delEmp);
       })
       .catch((err) => {

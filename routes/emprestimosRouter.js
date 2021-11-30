@@ -11,6 +11,6 @@ router.post("/", emprestimosController.create);
 //Atualização de Emprestimos
 router.put("/:id", emprestimosController.update);
 //Deletando Emprestimos
-router.delete("/:id", emprestimosController.delete);
+router.delete("/", emprestimosController.delete);
 
 module.exports = router;

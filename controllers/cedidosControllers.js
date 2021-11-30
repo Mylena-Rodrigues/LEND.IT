@@ -97,10 +97,11 @@ const cedidosControllers = {
 
   //Deletar Emprestimo
   delete: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
+    console.log(">>>>>>>>>", id);
     const delEmp = await Cedidos()
-      .destroy({ where: { id } })
-      .then(() => {
+      .destroy({ where: {id} })
+      .then((delEmp) => {
         return res.status(200).json(delEmp);
       })
       .catch((err) => {

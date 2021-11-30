@@ -11,6 +11,6 @@ router.post("/", cedidosControllers.create);
 //Atualização de Emprestimos
 router.post("/:id", cedidosControllers.update);
 //Deletando Emprestimos
-router.delete("/:id", cedidosControllers.delete);
+router.delete("/", cedidosControllers.delete);
 
 module.exports = router;
