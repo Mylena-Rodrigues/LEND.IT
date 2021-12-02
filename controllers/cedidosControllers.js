@@ -64,15 +64,14 @@ const cedidosControllers = {
 
   //Atualizar Emprestimo
   update: async (req, res) => {
-    const { id } = req.params;
     const {
+      id,
       item_emprestado,
       nome_donoObj,
       contato_celular_devolucao,
       contato_email_devolucao,
       data_emprestimo,
-      data_devolucao,
-      resultado_devolucao,
+      data_devolucao
     } = req.body;
     const modEmp = await Cedidos()
       .update(
@@ -82,12 +81,11 @@ const cedidosControllers = {
           contato_celular_devolucao,
           contato_email_devolucao,
           data_emprestimo,
-          data_devolucao,
-          resultado_devolucao,
+          data_devolucao
         },
         { where: { id } }
       )
-      .then(() => {
+      .then((modEmp) => {
         return res.status(200).json(modEmp);
       })
       .catch((err) => {

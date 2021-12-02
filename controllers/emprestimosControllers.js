@@ -67,15 +67,14 @@ const emprestimosControllers = {
 
   //Atualizar Emprestimo
   update: async (req, res) => {
-    const { id } = req.params;
     const {
+      id,
       item_emprestado,
       nome_responsavel_atual,
       contato_celular_devolucao,
       contato_email_devolucao,
       data_emprestimo,
-      data_devolucao,
-      resultado_devolucao,
+      data_devolucao
     } = req.body;
     const modEmp = await Emprestimos()
       .update(
@@ -85,8 +84,7 @@ const emprestimosControllers = {
           contato_celular_devolucao,
           contato_email_devolucao,
           data_emprestimo,
-          data_devolucao,
-          resultado_devolucao,
+          data_devolucao
         },
         { where: { id } }
       )
@@ -101,7 +99,6 @@ const emprestimosControllers = {
   //Deletar Emprestimo
   delete: async (req, res) => {
     const { id } = req.body;
-    console.log(">>>>>>>>>>>>>>" + id);
     const delEmp = await Emprestimos()
       .destroy({ where: {id} })
       .then((delEmp) => {

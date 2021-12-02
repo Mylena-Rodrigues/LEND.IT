@@ -9,7 +9,7 @@ router.post("/list/", cedidosControllers.userLoanList);
 //Criação de Emprestimos
 router.post("/", cedidosControllers.create);
 //Atualização de Emprestimos
-router.post("/:id", cedidosControllers.update);
+router.put("/", cedidosControllers.update);
 //Deletando Emprestimos
 router.delete("/", cedidosControllers.delete);
 
