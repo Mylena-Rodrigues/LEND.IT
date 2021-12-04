@@ -15,7 +15,7 @@ module.exports = () => {
       },
       nome_responsavel_atual: DataTypes.STRING,
       contato_celular_devolucao: DataTypes.STRING,
-      contato_celular_devolucao: DataTypes.STRING,
+      contato_email_devolucao: DataTypes.STRING,
       data_emprestimo: DataTypes.DATE,
       data_devolucao: DataTypes.DATE,
       resultado_devolucao: DataTypes.BOOLEAN,

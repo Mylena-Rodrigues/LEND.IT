@@ -45,7 +45,6 @@ const emprestimosControllers = {
       data_devolucao,
       resultado_devolucao
     } = req.body;
-    
     const novoEmp = await Emprestimos()
       .create({
         id_usuario_donoObj,
@@ -88,7 +87,7 @@ const emprestimosControllers = {
         },
         { where: { id } }
       )
-      .then(() => {
+      .then((modEmp) => {
         return res.status(200).json(modEmp);
       })
       .catch((err) => {

@@ -29,7 +29,7 @@ const cedidosControllers = {
         console.log("Error to list user loans: ", err);
       });
   },
-
+  
   //Criar emprestimo
   create: async (req, res) => {
     const {
@@ -73,6 +73,7 @@ const cedidosControllers = {
       data_emprestimo,
       data_devolucao
     } = req.body;
+    console.log(nome_donoObj)
     const modEmp = await Cedidos()
       .update(
         {
