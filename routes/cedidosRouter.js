@@ -8,6 +8,8 @@ router.get("/", cedidosControllers.index);
 router.post("/list/", cedidosControllers.userLoanList);
 //Criação de Emprestimos
 router.post("/", cedidosControllers.create);
+//Devolução de Emprestimos
+router.patch("/back/", cedidosControllers.giveBack);
 //Atualização de Emprestimos
 router.put("/", cedidosControllers.update);
 //Deletando Emprestimos

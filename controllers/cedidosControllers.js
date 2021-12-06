@@ -94,6 +94,27 @@ const cedidosControllers = {
       });
   },
 
+  //Devolvendo objetos
+  giveBack: async (req, res) => {
+    const {id} = req.body;
+    const data_devolucao = new Date().toISOString();
+    const resultado_devolucao = true;
+    const modEmp = await Cedidos()
+      .update(
+        {
+          data_devolucao,
+          resultado_devolucao
+        },
+        { where: { id } }
+      )
+      .then((modEmp) => {
+        return res.status(200).json(modEmp);
+      })
+      .catch((err) => {
+        console.log("Error to update loan: ", err);
+      });
+  },
+
   //Deletar Emprestimo
   delete: async (req, res) => {
     const { id } = req.body;

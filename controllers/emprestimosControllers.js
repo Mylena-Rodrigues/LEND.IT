@@ -15,9 +15,7 @@ const emprestimosControllers = {
   },
 
   //Listar Emprestimos de um usuário especifico
-  userLoanList: async (req, res) => {
-
-    
+  userLentList: async (req, res) => {
     const { id } = req.body;
     const listEmprestimos = await Emprestimos()
       .findAll({ where: { id_usuario_donoObj: id }})
@@ -84,6 +82,27 @@ const emprestimosControllers = {
           contato_email_devolucao,
           data_emprestimo,
           data_devolucao
+        },
+        { where: { id } }
+      )
+      .then((modEmp) => {
+        return res.status(200).json(modEmp);
+      })
+      .catch((err) => {
+        console.log("Error to update loan: ", err);
+      });
+  },
+  
+  //Devolvendo objetos
+  giveBack: async (req, res) => {
+    const {id} = req.body;
+    const data_devolucao = new Date().toISOString();
+    const resultado_devolucao = true;
+    const modEmp = await Emprestimos()
+      .update(
+        {
+          data_devolucao,
+          resultado_devolucao
         },
         { where: { id } }
       )
